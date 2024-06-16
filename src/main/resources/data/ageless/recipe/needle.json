@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "food",
   "pattern": [
     "I I",
     "I I",
@@ -12,6 +12,6 @@
     }
   },
   "result": {
-    "item": "ageless:needle"
+    "id": "ageless:needle"
   }
 }
