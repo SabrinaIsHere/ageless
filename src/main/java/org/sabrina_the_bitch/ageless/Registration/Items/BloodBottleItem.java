@@ -5,10 +5,15 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
+import net.minecraft.item.Items;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -20,12 +25,12 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.sabrina_the_bitch.ageless.Registration.RegistrationHandler;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 // TODO: Implement consequences of blood consumption (vampirism if bat blood, poison if otherwise if not a vampire)
-// TODO: Add nbt for filled level instead of using custom_model_data
-// TODO: Add nbt for entity blood type
 
 public class BloodBottleItem extends Item {
     // Component stuff
@@ -40,17 +45,9 @@ public class BloodBottleItem extends Item {
                     .codec(Codec.string(0, 99))
                     .packetCodec(PacketCodecs.string(99))
                     .build();
-    /*public static final ComponentType<Text> BLOOD_ORIGIN = register("blood_origin", (builder) -> {
-        return builder.codec(TextCodecs.STRINGIFIED_CODEC).packetCodec(TextCodecs.REGISTRY_PACKET_CODEC).cache();
-    });
-
-    private static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
-        return (ComponentType<T>)Registry.register(Registries.DATA_COMPONENT_TYPE, id, ((ComponentType.Builder)builderOperator.apply(ComponentType.builder())).build());
-    }*/
 
     private static void writeBloodLevel(ItemStack item, int amount) {
         item.set(BLOOD_LEVEL, amount);
-        item.set(BLOOD_ORIGIN_ID, "");
     }
     public static int readBloodLevel(ItemStack item) {
         return item.getComponents().getOrDefault(BLOOD_LEVEL, 0);
@@ -84,15 +81,37 @@ public class BloodBottleItem extends Item {
         if (stack.get(BLOOD_LEVEL) != null) {
             int value = readBloodLevel(stack);
             if (value <= 1) {
-                value = 3;
-            } else {
-                value -= 1;
+                if (user instanceof PlayerEntity) {
+                    PlayerInventory inventory = ((PlayerEntity) user).getInventory();
+                    inventory.removeOne(stack);
+                    inventory.insertStack(new ItemStack(Items.GLASS_BOTTLE));
+                } else {
+                    return new ItemStack(Items.GLASS_BOTTLE);
+                }
             }
+            value -= 1;
             stack.set(BLOOD_LEVEL, value);
         } else {
-            writeBloodLevel(stack, 3);
+            writeBloodLevel(stack, 1);
         }
-        System.out.println(readBloodLevel(stack));
+
+        // Handle blood drinking consequences
+        if (user instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) user;
+            if (false) {
+                // If is vampire. This is a placeholder bc vampirism isn't implemented yet
+            } else {
+                if (stack.get(BLOOD_ORIGIN_ID) != null) {
+                    //System.out.println(stack.get(BLOOD_ORIGIN_ID));
+                    if (Objects.equals(stack.get(BLOOD_ORIGIN_ID), "Bat")) {
+                        player.addStatusEffect(new StatusEffectInstance(RegistrationHandler.INFIRMUM_SANGUINEM_ENTRY, -1));
+                    } else {
+                        player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 4*20));
+                    }
+                }
+            }
+        }
+
         user.emitGameEvent(GameEvent.DRINK);
         return stack;
     }

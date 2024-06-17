@@ -5,11 +5,13 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import org.sabrina_the_bitch.ageless.Registration.Items.NeedleItem;
 import org.sabrina_the_bitch.ageless.Registration.Items.PurificationPowderItem;
@@ -20,11 +22,11 @@ import org.sabrina_the_bitch.ageless.Registration.StatusEffects.SanctifiedStatus
 public class RegistrationHandler {
     // Status Effects
     public static final InfirmumSanguinemStatusEffect INFIRMUM_SANGUINEM = new InfirmumSanguinemStatusEffect();
+    public static RegistryEntry<StatusEffect> INFIRMUM_SANGUINEM_ENTRY;
     public static final SanctifiedStatusEffect SANTIFIED = new SanctifiedStatusEffect();
     // Items
     public static final NeedleItem NEEDLE = new NeedleItem(new Item.Settings().maxCount(1));
     public static final BloodBottleItem BLOOD_BOTTLE = new BloodBottleItem(new Item.Settings().maxCount(1));
-    // TODO: Add correct status effect
     public static final PurificationPowderItem PURIFICATION_POWDER = new PurificationPowderItem(new Item.Settings().
             food(new FoodComponent.Builder()
                     .alwaysEdible()
@@ -41,8 +43,9 @@ public class RegistrationHandler {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(content -> {content.add(BLOOD_BOTTLE);});
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content -> {content.add(PURIFICATION_POWDER);});
         // Status Effects
-        Registry.register(Registries.STATUS_EFFECT, Identifier.of("ageless", "infirmum_sanguinem"), INFIRMUM_SANGUINEM);
-        Registry.register(Registries.STATUS_EFFECT, Identifier.of("ageless", "sanctified"), SANTIFIED);
+        /*Registry.register(Registries.STATUS_EFFECT, Identifier.of("ageless", "infirmum_sanguinem"), INFIRMUM_SANGUINEM);
+        Registry.register(Registries.STATUS_EFFECT, Identifier.of("ageless", "sanctified"), SANTIFIED);*/
+        INFIRMUM_SANGUINEM_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of("ageless", "infirmum_sanguinem"), INFIRMUM_SANGUINEM);
         // Custom components
         Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of("ageless", "blood_level"), BloodBottleItem.BLOOD_LEVEL);
         Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of("ageless", "blood_origin_id"), BloodBottleItem.BLOOD_ORIGIN_ID);
