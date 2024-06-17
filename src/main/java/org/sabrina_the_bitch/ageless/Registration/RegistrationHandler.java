@@ -23,7 +23,8 @@ public class RegistrationHandler {
     // Status Effects
     public static final InfirmumSanguinemStatusEffect INFIRMUM_SANGUINEM = new InfirmumSanguinemStatusEffect();
     public static RegistryEntry<StatusEffect> INFIRMUM_SANGUINEM_ENTRY;
-    public static final SanctifiedStatusEffect SANTIFIED = new SanctifiedStatusEffect();
+    public static final SanctifiedStatusEffect SANCTIFIED = new SanctifiedStatusEffect();
+    public static RegistryEntry<StatusEffect> SANCTIFIED_ENTRY;
     // Items
     public static final NeedleItem NEEDLE = new NeedleItem(new Item.Settings().maxCount(1));
     public static final BloodBottleItem BLOOD_BOTTLE = new BloodBottleItem(new Item.Settings().maxCount(1));
@@ -46,6 +47,7 @@ public class RegistrationHandler {
         /*Registry.register(Registries.STATUS_EFFECT, Identifier.of("ageless", "infirmum_sanguinem"), INFIRMUM_SANGUINEM);
         Registry.register(Registries.STATUS_EFFECT, Identifier.of("ageless", "sanctified"), SANTIFIED);*/
         INFIRMUM_SANGUINEM_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of("ageless", "infirmum_sanguinem"), INFIRMUM_SANGUINEM);
+        SANCTIFIED_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of("ageless", "sanctified"), SANCTIFIED);
         // Custom components
         Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of("ageless", "blood_level"), BloodBottleItem.BLOOD_LEVEL);
         Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of("ageless", "blood_origin_id"), BloodBottleItem.BLOOD_ORIGIN_ID);
