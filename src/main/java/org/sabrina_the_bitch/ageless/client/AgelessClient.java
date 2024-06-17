@@ -1,6 +1,7 @@
 package org.sabrina_the_bitch.ageless.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import org.sabrina_the_bitch.ageless.Registration.RegistrationHandler;
 
 public class AgelessClient implements ClientModInitializer {
     /**
@@ -8,6 +9,6 @@ public class AgelessClient implements ClientModInitializer {
      */
     @Override
     public void onInitializeClient() {
-
+        RegistrationHandler.clientRegister();
     }
 }
