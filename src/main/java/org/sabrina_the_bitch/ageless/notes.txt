@@ -1,0 +1,40 @@
+Todo -
+    - Change hunger bars to blood icon when player becomes a vampire
+    - Make normal food poison to vampires [Done]
+    - Implement villager mechanics
+        - Villager fear
+        - Taming
+    - Implement animal mechanics
+        - Gradual taming
+        - Regenerating blood levels
+            - Jade/Waila integration
+    - Vampire abilities
+        - Create the art for the gui
+        - Add the Abilities
+        - Serialize and save abilities
+    - Make fire damage vampires more [Done]
+    - Make vampires burn in the sunlight [Done]
+    - Make dispensers harvest blood
+    - Add the origin of blood to the tooltip of blood bottles
+
+Player Mixin Notes -
+    - Vampirism:
+        - Mix into onDeath(DamageSource damageSource) to trigger vapirism if potion effect is present
+        - Look into zombies daylight fire mechanics
+        - Mix into ActionResult interact(Entity entity, Hand hand) for the tool-less blood sucking
+        - Attributes for the speed and strength buffs?
+        - Check night vision potion mechanics for permanent night vision
+        - Mix into the addStatusEffect() function for poison immunity (also isInvulnerableTo(DamageSource damageSource))
+        - Look into the custom nbt stuff for vampirism (readCustomDataFromNbt(NbtCompound nbt), writeCustomDataToNbt(NbtCompound nbt))
+        - Mix into Either<SleepFailureReason, Unit> trySleep(BlockPos pos) for sleeping during the day
+        - canConsume(boolean ignoreHunger) can be modified to only allow consumption of blood
+            - ItemStack eatFood(World world, ItemStack stack, FoodComponent foodComponent)/hungerManager can be mixed into as well
+*Note: Still need to go through LivingEntity
+        - Mix an interface into LivingEntity to deal with blood levels?
+
+onDeath injection notes -
+    - Canceling onDeath at the header in LivingEntity and ServerPlayerEntity doesn't actually stop the death
+    - onDeath is called in damage() (line 1226) in LivingEntity
+    - Investigating totem of undying mechanics to try to cancel death
+    - Possible to cancel death with LivingEntity.setHealth(1.0F) in onDeath
+        - Use LivingEntity.clearStatusEffects() as well

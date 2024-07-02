@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "ageless",
+  "version": "${version}",
+  "name": "Ageless",
+  "description": "Allows you to become a Vampire!",
+  "authors": [
+    "Sabrina Myers"
+  ],
+  "contact": {
+    "repo": "https://github.com/sunse/Ageless"
+  },
+  "license": "MIT",
+  "icon": "assets/ageless/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.sabrina_the_bitch.ageless.client.AgelessClient"
+    ],
+    "main": [
+      "org.sabrina_the_bitch.ageless.Ageless"
+    ]
+  },
+  "mixins": [
+    "ageless.mixins.json"
+  ],
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/entity/player/PlayerEntity": ["org.sabrina_the_bitch.ageless.MixinInterfaces.PlayerVampirism"],
+      "net/minecraft/entity/player/HungerManager": ["org.sabrina_the_bitch.ageless.MixinInterfaces.PlayerVampirism"]
+    }
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

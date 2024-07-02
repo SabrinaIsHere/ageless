@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/glass_bottle"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "filled": 0.0
+      },
+      "model": "item/glass_bottle"
+    },
+    {
+      "predicate": {
+        "filled": 0.33
+      },
+      "model": "ageless:item/blood_bottle_1"
+    },
+    {
+      "predicate": {
+        "filled": 0.66
+      },
+      "model": "ageless:item/blood_bottle_2"
+    },
+    {
+      "predicate": {
+        "filled": 1.0
+      },
+      "model": "ageless:item/blood_bottle_3"
+    }
+  ]
+}
