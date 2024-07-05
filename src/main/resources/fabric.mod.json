@@ -26,8 +26,8 @@
   ],
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/entity/player/PlayerEntity": ["org.sabrina_the_bitch.ageless.MixinInterfaces.PlayerVampirism"],
-      "net/minecraft/entity/player/HungerManager": ["org.sabrina_the_bitch.ageless.MixinInterfaces.PlayerVampirism"]
+      "net/minecraft/entity/player/PlayerEntity": ["org/sabrina_the_bitch/ageless/MixinInterfaces/PlayerVampirism"],
+      "net/minecraft/entity/player/HungerManager": ["org/sabrina_the_bitch/ageless/MixinInterfaces/HungerManagerVampirism"]
     }
   },
   "depends": {
