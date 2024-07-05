@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "food",
+  "pattern": [
+    "I I",
+    "I I",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "ageless:needle"
+  }
+}
